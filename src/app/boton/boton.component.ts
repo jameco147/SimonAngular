@@ -5,10 +5,11 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './boton.component.html',
   styleUrls: ['./boton.component.css']
 })
+
 export class BotonComponent implements OnInit {
-  index: number = -1;
+  // VARIABLES
+  contador: number = -1;
   disabled: boolean = false;
-  // piezaArray: number[] = [1,2,3,4,5,6];
   piezaArray: number[] = [6, 6, 6, 6, 6, 6];
   arraySimmon: number[] = [];
   usados: number = 0;
@@ -17,91 +18,89 @@ export class BotonComponent implements OnInit {
   estadoBoton: boolean = false;
   turnoJugador: boolean = false;
   continuar: boolean = false;
-
-
+  botonDesactivados: boolean = true;
 
   constructor() { }
 
   ngOnInit() {
     //pinta la secuencia
     setInterval(() => {
+      //botonDesactivados = true;
       this.piezaArray = [6, 6, 6, 6, 6, 6];
-      this.piezaArray[this.arraySimmon[this.index]] = 6;
-      this.index = (this.index + 1);
-      this.piezaArray[this.arraySimmon[this.index]] = this.arraySimmon[this.index];
-      this.reproducir(this.arraySimmon[this.index]);
-      if (this.index > this.arraySimmon.length) {
+      this.piezaArray[this.arraySimmon[this.contador]] = 6;
+      this.contador++;     
+      this.piezaArray[this.arraySimmon[this.contador]] = this.arraySimmon[this.contador];
+      this.reproducir(this.arraySimmon[this.contador]);
+      if (this.contador > this.arraySimmon.length) {
         this.turnoJugador = true;
       }
-      console.log(this.index);
+      console.log(this.contador);
     }, 1000);
   }
 
   respuestaUsuario(num) {
-    this.reproducir(num);
-    if (this.turnoJugador) {
-      this.arrayRespuestaUsuario.push(num);
-      this.compararRespuesta();
+    if (!this.botonDesactivados) {
+        this.reproducir(num);
+      if (this.turnoJugador) {
+        this.arrayRespuestaUsuario.push(num);
+        this.compararRespuesta();
+        //pinta y despinta botones al hacer click
+        if (this.estadoBoton) {
+          this.piezaArray[num] = num;
+          this.usados = num;
+          this.estadoBoton = true;
+        } else {
+          this.piezaArray[this.usados] = 6;
+          this.piezaArray[num] = num;
+          this.estadoBoton = false;
+          this.usados = num;
+        }
+      }
 
-      console.log(this.arraySimmon);
-
-      console.log(this.arrayRespuestaUsuario);
-
-
-      //pinta y despinta botones al hacer click
-      if (this.estadoBoton) {
-        this.piezaArray[num] = num;
-        this.usados = num;
-        this.estadoBoton = true;
-      } else {
-        this.piezaArray[this.usados] = 6;
-        this.piezaArray[num] = num;
-        this.estadoBoton = false;
-        this.usados = num;
+      if (this.continuar) {
+        this.arrayRespuestaUsuario = [];
+        this.start();
       }
     }
-
-    console.log(this.continuar + " continua?");
-
-
-    if (this.continuar) {
-      this.arrayRespuestaUsuario = [];
-      this.start();
-      console.log("hola");
-    }
-
   }
 
   start() {
     this.arraySimmon.push(Math.floor(Math.random() * 6))
-    this.index = -1;
+    this.contador = -1;
+    this.botonDesactivados = false;
   }
 
   compararRespuesta() {
-
     for (let i = 0; i < this.arraySimmon.length; i++) {
       if (this.arrayRespuestaUsuario[i] === this.arraySimmon[i]) {
-        console.log("Correcto");
         this.continuar = true;
-        console.log(i + " este es i");
-        //this.arrayRespuestaUsuario = [];
       } else if (this.arrayRespuestaUsuario[i] !== this.arraySimmon[i] && this.arrayRespuestaUsuario[i] !== undefined) {
-        console.log("Incorrecto");
         this.continuar = false;
+        this.botonDesactivados = true;
+        this.contador = -1;
+        this.disabled  = false;
+        this.piezaArray = [6, 6, 6, 6, 6, 6];
+        this.arraySimmon = [];
+        this.usados = 0;
+        this.url = 1;
+        this.arrayRespuestaUsuario = [];
+        this.estadoBoton = false;
+        this.turnoJugador = false;
+        this.continuar = false;
+
+        alert("Derrota!");
+        break;
       } else {
         this.continuar = false;
+        break;
       }
     }
-
-
-
-
-
   }
+
   reproducir(num) {
     const audio = new Audio("../../assets/Bleeps/"+num+".wav");
     audio.play();
-}
+  }
 
 }
 
@@ -133,7 +132,7 @@ export class BotonComponent implements OnInit {
   styleUrls: ['./boton.component.css']
 })
 export class BotonComponent {
-  index: number = 0;
+  contador: number = 0;
   disabled: boolean = false;
   // piezaArray: number[] = [1,2,3,4,5,6];
   piezaArray: number[] = [6, 6, 6, 6, 6, 6];
