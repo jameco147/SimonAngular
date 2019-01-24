@@ -83,6 +83,8 @@ export class BotonComponent implements OnInit {
       if (this.arrayRespuestaUsuario[i] === this.arraySimmon[i]) {
         this.continuar = true;
       } else if (this.arrayRespuestaUsuario[i] !== this.arraySimmon[i] && this.arrayRespuestaUsuario[i] !== undefined) {
+        const lose = new Audio("../../assets/Bleeps/lose.mp3");
+        lose.play();
         this.continuar = false;
         this.botonDesactivados = true;
         this.contador = -1;
@@ -96,6 +98,7 @@ export class BotonComponent implements OnInit {
         this.turnoJugador = false;
         this.continuar = false;
         this.startActivado = true;
+
         alert("Has perdido, puntuacion final: "+this.score);
         this.score = 0;
         break;

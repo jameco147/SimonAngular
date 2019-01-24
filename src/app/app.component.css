@@ -1,8 +1,18 @@
-table {
-    margin-left:42%;
-    margin-top: 4%;
+.superDiv{
+    background-image: url("fondo.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 100vh;
+    color: white;
 }
-
-h2 {
-    text-align: center;
+.contTitulo{
+    padding-top: 4%;
+    font-family: 'Montserrat', sans-serif;
+}
+h1{
+    font-size: 48pt;
+}
+h2{
+    font-size: 32pt;
 }

@@ -1,4 +1,18 @@
+.contenido{
+    width: 800px;
+    padding-left: 26%;
+}
 table {
-    margin-left: 40%;
+    margin-left: 39%;
+    padding-top: 16%;
+}
+button{
+    float: right;
+    padding: 20px;
+    border-radius: 12px;
+    background-color: lightgreen;
+}
+h2{
+    float: right;
 }
 
