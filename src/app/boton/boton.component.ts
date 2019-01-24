@@ -20,27 +20,11 @@ export class BotonComponent implements OnInit {
   continuar: boolean = false;
   botonDesactivados: boolean = true;
   startActivado: boolean = true;
+  score: number = 0;
 
   constructor() { }
 
-/*  ngOnInit() {
-    //pinta la secuencia
-    setInterval(() => {
-      //botonDesactivados = true;
-      this.piezaArray = [6, 6, 6, 6, 6, 6];
-      this.piezaArray[this.arraySimmon[this.contador]] = 6;
-      this.contador++;     
-      this.piezaArray[this.arraySimmon[this.contador]] = this.arraySimmon[this.contador];
-      this.reproducir(this.arraySimmon[this.contador]);
-      if (this.contador > this.arraySimmon.length) {
-        this.turnoJugador = true;
-      }
-      console.log(this.contador);
-    }, 1000);
-  }
-  */
-
-  kk() {
+  cargarBotones() {
     //pinta la secuencia
     setInterval(() => {
       this.piezaArray = [6, 6, 6, 6, 6, 6];
@@ -75,11 +59,11 @@ export class BotonComponent implements OnInit {
           this.usados = num;
         }
       }
-
       if (this.continuar) {
         this.arrayRespuestaUsuario = [];
         this.arraySimmon.push(Math.floor(Math.random() * 6))
         this.contador = -1;
+        this.score++;
       }
     }
   }
@@ -90,7 +74,7 @@ export class BotonComponent implements OnInit {
       this.contador = -1;
       this.botonDesactivados = false; 
       this.startActivado = false;
-      this.kk();
+      this.cargarBotones();
     }
   }
 
@@ -112,7 +96,8 @@ export class BotonComponent implements OnInit {
         this.turnoJugador = false;
         this.continuar = false;
         this.startActivado = true;
-        alert("Derrota!");
+        alert("Has perdido, puntuacion final: "+this.score);
+        this.score = 0;
         break;
       } else {
         this.continuar = false;
