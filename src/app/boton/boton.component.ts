@@ -24,7 +24,7 @@ export class BotonComponent implements OnInit {
 
   constructor() { }
 
-  cargarBotones() {
+  ngOnInit() {
     //pinta la secuencia
     setInterval(() => {
       this.piezaArray = [6, 6, 6, 6, 6, 6];
@@ -74,7 +74,7 @@ export class BotonComponent implements OnInit {
       this.contador = -1;
       this.botonDesactivados = false; 
       this.startActivado = false;
-      this.cargarBotones();
+      this.ngOnInit();
     }
   }
 
