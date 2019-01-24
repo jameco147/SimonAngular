@@ -19,10 +19,11 @@ export class BotonComponent implements OnInit {
   turnoJugador: boolean = false;
   continuar: boolean = false;
   botonDesactivados: boolean = true;
+  startActivado: boolean = true;
 
   constructor() { }
 
-  ngOnInit() {
+/*  ngOnInit() {
     //pinta la secuencia
     setInterval(() => {
       //botonDesactivados = true;
@@ -32,6 +33,24 @@ export class BotonComponent implements OnInit {
       this.piezaArray[this.arraySimmon[this.contador]] = this.arraySimmon[this.contador];
       this.reproducir(this.arraySimmon[this.contador]);
       if (this.contador > this.arraySimmon.length) {
+        this.turnoJugador = true;
+      }
+      console.log(this.contador);
+    }, 1000);
+  }
+  */
+
+  kk() {
+    //pinta la secuencia
+    setInterval(() => {
+      this.piezaArray = [6, 6, 6, 6, 6, 6];
+      this.contador++;     
+      this.piezaArray[this.arraySimmon[this.contador]] = 6;
+      this.piezaArray[this.arraySimmon[this.contador]] = this.arraySimmon[this.contador];
+      this.reproducir(this.arraySimmon[this.contador]);
+      // this.botonDesactivados = true;
+      if (this.contador > this.arraySimmon.length) {
+        // this.botonDesactivados = false;
         this.turnoJugador = true;
       }
       console.log(this.contador);
@@ -48,7 +67,7 @@ export class BotonComponent implements OnInit {
         if (this.estadoBoton) {
           this.piezaArray[num] = num;
           this.usados = num;
-          this.estadoBoton = true;
+          this.estadoBoton = true; 
         } else {
           this.piezaArray[this.usados] = 6;
           this.piezaArray[num] = num;
@@ -59,15 +78,20 @@ export class BotonComponent implements OnInit {
 
       if (this.continuar) {
         this.arrayRespuestaUsuario = [];
-        this.start();
+        this.arraySimmon.push(Math.floor(Math.random() * 6))
+        this.contador = -1;
       }
     }
   }
 
   start() {
-    this.arraySimmon.push(Math.floor(Math.random() * 6))
-    this.contador = -1;
-    this.botonDesactivados = false;
+    if (this.startActivado == true) {
+      this.arraySimmon.push(Math.floor(Math.random() * 6))
+      this.contador = -1;
+      this.botonDesactivados = false; 
+      this.startActivado = false;
+      this.kk();
+    }
   }
 
   compararRespuesta() {
@@ -87,7 +111,7 @@ export class BotonComponent implements OnInit {
         this.estadoBoton = false;
         this.turnoJugador = false;
         this.continuar = false;
-
+        this.startActivado = true;
         alert("Derrota!");
         break;
       } else {
@@ -103,89 +127,3 @@ export class BotonComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//codigo pendiente
-/* import { Component, OnInit } from '@angular/core';
-
-@Component({
-  selector: 'app-boton',
-  templateUrl: './boton.component.html',
-  styleUrls: ['./boton.component.css']
-})
-export class BotonComponent {
-  contador: number = 0;
-  disabled: boolean = false;
-  // piezaArray: number[] = [1,2,3,4,5,6];
-  piezaArray: number[] = [6, 6, 6, 6, 6, 6];
-
-  //rojo 0, morado 1, verde 2, amarillo 3, azul 4, negro 5, gris 6
-  arraySimmon: number[] = [1, 0, 4, 5, 1, 5];
-  url: number = 1;
-  estadoInicio: boolean = true;
-
-
-  start() {
-
-
-
-    if (this.estadoInicio) {
-      console.log('hola1');
-      this.estadoInicio = false;
-      for (let i = 0; i < this.arraySimmon.length; i++) {
-
-        console.log('pepito');
-
-
-        this.resetBoton(this.arraySimmon[i], this.arraySimmon[i]);
-        this.sleep(1000);
-      }
-
-
-    }
-
-  }
-
-  resetBoton(posicion, color) {
-    console.log('hola2');
-    console.log(posicion);
-    console.log(color);
-
-
-    this.piezaArray[posicion] = color;
-    console.log(this.piezaArray + ' pieza array');
-
-    console.log(posicion + '  posicion despues');
-    console.log(color + '  color despues');
-    this.sleep(2000);
-    this.piezaArray[posicion] = 6;
-    // aquiiiiiiiiiiiiii es donde paras
-    console.log(this.piezaArray + ' pieza array despues');
-    console.log('hola');
-
-  }
-  sleep(miliseconds) {
-    var currentTime = new Date().getTime();
-
-    while (currentTime + miliseconds >= new Date().getTime()) {
-    }
-  }
-}*/
